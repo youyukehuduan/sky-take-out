@@ -114,4 +114,30 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     }
 
+    @Override
+    public EmployeeDTO findById(Long id) {
+         Employee employee = employeeMapper.findById(id);
+
+         EmployeeDTO employeeDTO = new EmployeeDTO();
+
+        // 使用 Spring 的 BeanUtils 进行属性复制
+        BeanUtils.copyProperties(employee, employeeDTO);
+
+        return employeeDTO;
+
+    }
+
+    @Override
+    public void update(EmployeeDTO employeeDTO) {
+
+        Employee employee = new Employee();
+        BeanUtils.copyProperties(employeeDTO, employee);
+        employee.setUpdateTime(LocalDateTime.now());
+        employee.setUpdateUser(BaseContext.getCurrentId());
+
+        employeeMapper.updateById(employee);
+
+
+    }
+
 }
