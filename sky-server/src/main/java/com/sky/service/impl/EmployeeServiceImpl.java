@@ -102,4 +102,16 @@ public class EmployeeServiceImpl implements EmployeeService {
         return new PageResult(total, records);
     }
 
+    @Override
+    public void startOrStop(Integer status, Long id) {
+        //Employee.builder() 能有选择地初始化部分属性，代码简洁且利于精准控制更新，new Employee() 需逐个用 setter 设值，易误改属性。
+        Employee employe = Employee.builder()
+                .status(status)
+                .id(id)
+                .build();
+
+        employeeMapper.startOrStop(employe);
+
+    }
+
 }

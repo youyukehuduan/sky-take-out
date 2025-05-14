@@ -26,4 +26,6 @@ public interface EmployeeMapper {
 
 
     Page<Employee> page(EmployeePageQueryDTO empDTO);
+
+    void startOrStop(Employee employe);
 }

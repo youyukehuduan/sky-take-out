@@ -14,7 +14,13 @@
         order by create_time desc
     </select>
 
-
+    <update id="startOrStop">
+        update
+            employee
+        set
+            status = #{status}
+        where id = #{id}
+    </update>
 
 
 </mapper>
