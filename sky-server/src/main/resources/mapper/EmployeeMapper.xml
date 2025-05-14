@@ -22,6 +22,22 @@
         where id = #{id}
     </update>
 
+    <select id="findById" resultType="com.sky.entity.Employee">
+        select * from employee where id = #{id}
+    </select>
+
+    <update id="updateById">
+        update
+            employee
+        set
+            id_number = #{idNumber},
+            name = #{name},
+            phone = #{phone},
+            sex = #{sex},
+            username = #{username}
+        where id = #{id}
+    </update>
+
 
 </mapper>
 
