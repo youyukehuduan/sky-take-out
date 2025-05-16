@@ -77,12 +77,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         //设置密码，默认123456  //String.getBytes() 是 Java String 类的方法，用于将字符串转换为字节数组。
         employee.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes()));
 
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
+ //       employee.setCreateTime(LocalDateTime.now());
+  //      employee.setUpdateTime(LocalDateTime.now());
 
-        // getCurrentId()
-        employee.setCreateUser(BaseContext.getCurrentId());
-        employee.setUpdateUser(BaseContext.getCurrentId());
+
+ //       employee.setCreateUser(BaseContext.getCurrentId());
+ //       employee.setUpdateUser(BaseContext.getCurrentId());
 
 
         employeeMapper.add(employee);
@@ -132,8 +132,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeDTO, employee);
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser(BaseContext.getCurrentId());
+ //       employee.setUpdateTime(LocalDateTime.now());
+ //       employee.setUpdateUser(BaseContext.getCurrentId());
 
         employeeMapper.updateById(employee);
 
