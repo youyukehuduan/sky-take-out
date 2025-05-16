@@ -34,7 +34,9 @@
             name = #{name},
             phone = #{phone},
             sex = #{sex},
-            username = #{username}
+            username = #{username},
+            update_time = #{updateTime},
+            update_user = #{updateUser}
         where id = #{id}
     </update>
 
