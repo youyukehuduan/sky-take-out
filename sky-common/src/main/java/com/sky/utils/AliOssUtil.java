@@ -19,6 +19,11 @@ public class AliOssUtil {
     private String accessKeySecret;
     private String bucketName;
 
+    public AliOssUtil() {
+        log.info("OSS配置：endpoint={}, accessKeyId={}, bucketName={}",
+                endpoint, accessKeyId, bucketName);
+    }
+
     /**
      * 文件上传
      *
