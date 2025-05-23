@@ -12,4 +12,19 @@
                     (#{flavor.dishId},#{flavor.name},#{flavor.value})
                 </foreach>
     </insert>
+
+    <delete id="deleteById">
+        delete
+        from
+        dish_flavor
+        where dish_id = #{id}
+    </delete>
+
+<!--    <select id="getById" resultType="java.Util.List">-->
+<!--        select-->
+<!--            name,value-->
+<!--        from-->
+<!--            dish_flavor-->
+<!--        where dish_id = #{id};-->
+<!--    </select>-->
 </mapper>
