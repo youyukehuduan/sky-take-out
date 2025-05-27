@@ -40,12 +40,19 @@ sky:
     admin-secret-key: itcast
     # 设置jwt过期时间
 #    admin-ttl: 7200000
+    user-secret-key: itcast_user   # 新增这一行
+    user-token-name: authentication   # 👈 缺少这一行！
     admin-ttl: 7200000000
     # 设置前端传递过来的令牌名称
-    admin-token-name: token
+    admin-token-name: authentication
+    user-ttl: 360000000              # 可选：为用户设置不同的过期时间
+
   alioss:
     endpoint: ${sky.alioss.endpoint}
     access-key-id: ${sky.alioss.access-key-id}
-#    access-key-secret: ${sky.alioss.access-key-secret}
-    accessKeySecret: ${sky.alioss.access-key-secret}
+    access-key-secret: ${sky.alioss.access-key-secret}
+#    accessKeySecret: ${sky.alioss.access-key-secret}
     bucket-name: ${sky.alioss.bucket-name}
+  wechat:
+    appid: ${sky.wechat.appid}
+    secret: ${sky.wechat.secret}

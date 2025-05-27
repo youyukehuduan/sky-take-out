@@ -31,7 +31,8 @@ public interface DishMapper {
     @AutoFill(value= OperationType.INSERT)
     void update(Dish dish);
 
-    
+
+    //根据分类Id查询菜品
     @Select("select * from dish where category_id = #{id}")
     List<Dish> getByCategoryId(Long id);
 

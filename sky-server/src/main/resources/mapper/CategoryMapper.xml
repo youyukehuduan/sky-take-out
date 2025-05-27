@@ -60,6 +60,19 @@
             update_user = #{updateUser}
         where id = #{id}
     </update>
+
+    <select id="lists" resultType="com.sky.entity.Category">
+        SELECT
+            *
+        FROM
+            category
+        WHERE
+            status = 1
+        <if test=" type != null ">
+            AND type = #{type}
+        </if>
+            ORDER BY sort ASC, create_time ASC
+    </select>
 </mapper>
 
 

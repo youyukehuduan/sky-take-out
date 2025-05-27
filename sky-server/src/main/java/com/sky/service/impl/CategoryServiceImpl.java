@@ -91,11 +91,14 @@ public class CategoryServiceImpl implements CategoryService {
         categoryMapper.setStatus(category);
     }
 
+    //判断单品或套餐
     @Override
     public List<Category> findByList(Integer type) {
-    //    Category category = new Category();
-
         return categoryMapper.lists(type);
 
     }
+
+
+
+
 }

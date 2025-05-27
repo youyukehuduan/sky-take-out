@@ -20,5 +20,8 @@ public interface DishService {
 
     void update(DishDTO dto);
 
+    //根据分类Id查询菜品
     List<DishVO> getByList(Long id);
+
+//    DishVO findInfoById(Integer id);
 }

@@ -24,6 +24,7 @@ public interface CategoryService {
     void setStatus(Long id,Integer status );
 
     List<Category> findByList(Integer type);
+
 }
 
 

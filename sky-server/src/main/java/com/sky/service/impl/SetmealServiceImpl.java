@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -92,5 +93,34 @@ public class SetmealServiceImpl implements SetmealService {
     public void delete(List<Long> ids) {
 
         setmealMapper.delete(ids);
+    }
+
+    //4
+    @Override
+    public List<SetmealDish> getDishByCategoryId(Long setmeal_id) {
+        List<SetmealDish> lists = setmealdishMapper.getBymealId(setmeal_id);
+        return lists;
+
+    }
+
+    @Override
+    public List<SetmealVO> getInfoById(Long categoryId) {
+        // 1. 从数据库查询出原始数据（List<Setmeal>）
+       List<Setmeal> lists = setmealMapper.getBymealId(categoryId);
+       // 2. 创建一个新的 List<SetmealVO>，用来保存转换后的 VO 对象
+       List<SetmealVO> vos = new ArrayList<>();
+
+        // 3. 遍历原始的 Setmeal 数据列表
+       for(Setmeal setmeal : lists){
+           // 4. 创建一个 SetmealVO 对象
+           SetmealVO vo = new SetmealVO();
+
+           // 5. 把 Setmeal 的属性复制到 SetmealVO 中（字段名一致时自动赋值）
+           BeanUtils.copyProperties(setmeal,vo);
+
+           // 6. 把这个 vo 添加到 vos 列表中
+           vos.add(vo);
+       }
+       return vos;
     }
 }

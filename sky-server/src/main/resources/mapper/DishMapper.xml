@@ -54,4 +54,8 @@
         where id = #{id}
     </update>
 
+    <select id="findInfoById" resultType="com.sky.entity.Dish">
+        select * from dish where id = #{id}
+    </select>
+
     </mapper>

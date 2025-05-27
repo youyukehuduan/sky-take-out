@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 //菜品管理
-@RestController
+@RestController("adminDishController")
 @RequestMapping("/admin/dish")
 @Slf4j
 @Api(tags = "菜品管理")
@@ -59,12 +59,12 @@ public class DishController {
         return Result.success();
     }
 
-    @GetMapping("/list")
-    public Result getByList(@RequestParam Long categoryId){
+    @GetMapping("/list")    public Result getByList(@RequestParam Long categoryId){
         log.info("根据分类Id查询菜品:{}",categoryId);
         List<DishVO>  vos = dishService.getByList(categoryId);
         return Result.success(vos);
     }
+
 
 
 

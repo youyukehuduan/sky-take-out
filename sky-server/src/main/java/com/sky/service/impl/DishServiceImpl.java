@@ -150,6 +150,8 @@ public class DishServiceImpl implements DishService {
 
     }
 
+
+    //根据分类Id查询菜品
     @Override
     public List<DishVO> getByList(Long id) {
         List<Dish> dishs = dishMapper.getByCategoryId(id);
@@ -159,10 +161,14 @@ public class DishServiceImpl implements DishService {
         for(Dish d : dishs){
             DishVO vo = new DishVO();
             BeanUtils.copyProperties(d, vo);
+            List<DishFlavor> dfs = dishFlavorMapper.getById(d.getId());
+            vo.setFlavors(dfs); //设置口味
             vos.add(vo);
         }
         return vos;
 
 
     }
+
+
 }

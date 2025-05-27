@@ -23,4 +23,6 @@ public class JwtProperties {
     private long userTtl;
     private String userTokenName;
 
+        // 👈 可选添加
+
 }

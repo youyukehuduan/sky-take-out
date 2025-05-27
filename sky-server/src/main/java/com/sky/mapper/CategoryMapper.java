@@ -52,11 +52,11 @@ public interface CategoryMapper {
      *
      *
      */
-    @Select("SELECT * FROM category WHERE status = 1 AND type = #{type} ORDER BY sort ASC, create_time ASC")
     List<Category> lists(Integer type);
 
     @AutoFill(value = OperationType.UPDATE)
     void setStatus(Category category);
+
 }
 
 
