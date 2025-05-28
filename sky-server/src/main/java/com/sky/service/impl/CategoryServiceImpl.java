@@ -79,6 +79,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void setStatus( Long id,Integer status ) {
 
+
         Category category = new Category();
 
         //使用实体类，给她id和状态

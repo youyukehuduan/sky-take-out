@@ -10,9 +10,11 @@ import com.sky.vo.DishVO;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 //菜品管理
 @RestController("adminDishController")
@@ -24,10 +26,18 @@ public class DishController {
     @Autowired
     private DishService dishService;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
     @PostMapping
     public Result AddDish(@RequestBody DishDTO DTO){
         log.info("新增菜品:{}",DTO);
         dishService.addDish(DTO);
+
+        //清理缓存数据
+        String key = "dish:" + DTO.getCategoryId();
+        cleanCache(key);
+
         return Result.success();
     }
 
@@ -42,6 +52,10 @@ public class DishController {
     public Result Delete(@RequestParam List<Long> ids){
         log.info("删除菜品:{}",ids);
          dishService.delete(ids);
+
+        //将所有的菜品缓存数据清理掉，所有以dish_开头的key
+        cleanCache("dish_*");
+
          return Result.success();
     }
 
@@ -56,15 +70,24 @@ public class DishController {
     public Result update(@RequestBody DishDTO DTO){
         log.info("更新菜品");
         dishService.update(DTO);
+
+        //将所有的菜品缓存数据清理掉，所有以dish_开头的key
+        cleanCache("dish*");
+        log.info("已经清理所有缓存：dish*");
         return Result.success();
     }
 
-    @GetMapping("/list")    public Result getByList(@RequestParam Long categoryId){
+    @GetMapping("/list")
+    public Result getByList(@RequestParam Long categoryId){
         log.info("根据分类Id查询菜品:{}",categoryId);
         List<DishVO>  vos = dishService.getByList(categoryId);
         return Result.success(vos);
     }
 
+    public void cleanCache(String pattern){
+        Set keys = redisTemplate.keys(pattern);
+        redisTemplate.delete(keys); //删除缓存数据，仅它自己
+    }
 
 
 

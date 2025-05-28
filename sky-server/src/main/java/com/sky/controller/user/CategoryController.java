@@ -31,6 +31,10 @@ public class CategoryController {
     @GetMapping("/list")
     @ApiOperation("C端-分类接口")
     public Result list( Integer type){
+
+
+
+
         log.info("查询分类:要查询喽~");
         List<Category> lists = categoryService.findByList(type);
         return Result.success(lists);

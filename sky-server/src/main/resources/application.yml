@@ -44,7 +44,8 @@ sky:
     user-token-name: authentication   # 👈 缺少这一行！
     admin-ttl: 7200000000
     # 设置前端传递过来的令牌名称
-    admin-token-name: authentication
+#    admin-token-name: authentication
+    admin-token-name: token
     user-ttl: 360000000              # 可选：为用户设置不同的过期时间
 
   alioss:
