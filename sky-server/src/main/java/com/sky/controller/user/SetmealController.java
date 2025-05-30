@@ -29,7 +29,7 @@ public class SetmealController {
 
     @GetMapping("{id}")
     @ApiOperation("根据ID查套餐")
-    @Cacheable("")
+    @Cacheable(cacheNames = "setmealCache",key = "#categoryId") //key: setmealCache::100
     public Result getByListId(@PathVariable Long id){
         log.info("根据ID查套餐所含的菜品");
         SetmealVO vo = setmealService.getByListId(id);
