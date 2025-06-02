@@ -22,7 +22,7 @@ public interface ShopCartMapper {
             " values (#{name},#{userId},#{dishId},#{setmealId},#{dishFlavor},#{number},#{amount},#{image},#{createTime})")
     void insert(ShoppingCart shoppingCart);
 
-    @Delete("delete from shopping_cart where id = #{id}")
+    @Delete("delete from shopping_cart where user_id = #{id}")
     void delete(Long id);
 
     @Select("select * from shopping_cart where user_id = #{id} ")
