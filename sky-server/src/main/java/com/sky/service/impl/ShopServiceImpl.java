@@ -10,6 +10,7 @@ import com.sky.mapper.SetmealMapper;
 import com.sky.mapper.ShopCartMapper;
 import com.sky.mapper.ShopMapper;
 import com.sky.service.ShopService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class ShopServiceImpl implements ShopService {
 
     @Autowired
@@ -107,6 +109,7 @@ public class ShopServiceImpl implements ShopService {
             //更新新的数量
             shopCartMapper.updateNumberById(cart); // Java值改变，未改变数据库
             if(cart.getNumber() == 0) {
+                log.info("减到零了，原神，启动");
                 shopCartMapper.delete(cart.getId());
             }
 
