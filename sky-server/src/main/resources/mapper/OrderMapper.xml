@@ -49,5 +49,83 @@
         where id=#{id}
     </update>
 
+    <!-- 查询订单主表 orders -->
+    <select id="historyOrders" resultType="com.sky.entity.Orders">
+        SELECT *
+        FROM orders
+        <where>
+            <!-- 必须是当前用户 -->
+            user_id = #{userId}
+
+            <!-- 状态过滤（可选） -->
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+
+            <!-- 时间范围过滤（可选） -->
+            <if test="beginTime != null">
+                AND order_time &gt;= #{beginTime}
+            </if>
+            <if test="endTime != null">
+                AND order_time &lt;= #{endTime}
+            </if>
+
+        </where>
+
+        <!-- 按下单时间倒序排列 -->
+        ORDER BY order_time DESC
+    </select>
+
+    <update id="cancelOrders">
+        update
+            orders
+        set
+            status = 6,
+            cancel_reason = "我不想要了",
+            cancel_time = now()
+        where
+            id = #{id}
+    </update>
+
+        <!--    查询所有订单消息-->
+    <select id="find" resultType="com.sky.entity.Orders">
+        select
+            *
+        from
+            orders
+        <where>
+            <!-- 手机号过滤（可选） -->
+            <if test="phone != null">
+                AND phone = #{phone}
+            </if>
+            <!-- 订单号过滤（可选） -->
+            <if test="number != null">
+                AND number = #{number}
+            </if>
+            <!-- 状态过滤（可选） -->
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+
+            <!-- 时间范围过滤（可选） -->
+            <if test="beginTime != null">
+                AND order_time &gt;= #{beginTime}
+            </if>
+            <if test="endTime != null">
+                AND order_time &lt;= #{endTime}
+            </if>
+
+        </where>
+          order by order_time desc
+    </select>
+
+    <select id="statistics" resultType="com.sky.vo.OrderStatisticsVO">
+        select
+            sum(case when status = 2 then 1 else 0 end) toBeConfirmed,
+            sum(case when status = 3 then 1 else 0 end) confirmed,
+            sum(case when status = 4 then 1 else 0 end) deliveryInProgress
+        from
+            orders
+    </select>
 
 </mapper>

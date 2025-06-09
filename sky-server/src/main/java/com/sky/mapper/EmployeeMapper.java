@@ -28,7 +28,7 @@ public interface EmployeeMapper {
 
 
 
-    Page<Employee> page(EmployeePageQueryDTO empDTO);
+    Page<Employee> page(Employee employee);
 
     //无法使用AOP，建议在service中直接设置
     //接口参数未包含实体类或未在 SQL 中更新时间字段，导致自动填充的updateTime和updateUser未生效，

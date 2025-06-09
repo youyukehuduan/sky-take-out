@@ -7,6 +7,7 @@ import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.DishService;
 import com.sky.vo.DishVO;
+import com.sky.websocket.WebSocketServer;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class DishController {
     @Autowired
     private RedisTemplate redisTemplate;
 
+//    @Autowired
+//    private WebSocketServer webSocketServer;
+
     @PostMapping
     public Result AddDish(@RequestBody DishDTO DTO){
         log.info("新增菜品:{}",DTO);
@@ -43,6 +47,12 @@ public class DishController {
 
     @GetMapping("/page")
     public Result page(DishPageQueryDTO dto){
+//        if (webSocketServer == null) {
+//            log.info("WebSocketServer 是 null！");
+//        } else {
+//            log.info("WebSocketServer 不是 null，准备发送消息");
+//            webSocketServer.sendToAllClient("测试消息");
+//        }
         log.info("菜品查询:{}",dto);
         PageResult pageResult =  dishService.page(dto);
         return Result.success(pageResult);

@@ -94,7 +94,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         //开始分页查询
         PageHelper.startPage(empDTO.getPage(),empDTO.getPageSize());
 
-        Page<Employee> page = employeeMapper.page(empDTO);
+        Employee employee = new Employee();
+        BeanUtils.copyProperties(empDTO, employee);
+
+        Page<Employee> page = employeeMapper.page(employee);
 
         //3，解析结果，并封装
         long total = page.getTotal();
@@ -124,7 +127,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         BeanUtils.copyProperties(employee, employeeDTO);
 
         return employeeDTO;
-
     }
 
     @Override
