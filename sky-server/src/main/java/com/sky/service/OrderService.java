@@ -28,7 +28,7 @@ public interface OrderService {
 
     void repetion(Integer id);
 
-    void reminder(Integer id);
+    void reminder(Long id);
 
     //分页查询
     PageResult page(OrdersPageQueryDTO dto);

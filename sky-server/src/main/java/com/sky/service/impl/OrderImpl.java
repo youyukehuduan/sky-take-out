@@ -149,13 +149,13 @@ public class OrderImpl implements OrderService {
 
         //通过WebSocket实现来单提醒，向客户端浏览器推送消息
         // paySuccess 被跳过，不会生效
-        log.info("支付了12345");
-        Map map = new HashMap();
-        map.put("type",1);//消息类型，1表示来单提醒
-        map.put("orderId",orders.getId());
-        map.put("content","订单号：" + this.orders.getNumber());
-        log.info("websocket向前端返回数据:{}",map);
-        webSocketServer.sendToAllClient(JSON.toJSONString(map));
+            log.info("支付了12345");
+            Map map = new HashMap();
+            map.put("type",1);//消息类型，1表示来单提醒
+            map.put("orderId",orders.getId());
+            map.put("content","订单号：" + this.orders.getNumber());
+            log.info("websocket向前端返回数据:{}",map);
+            webSocketServer.sendToAllClient(JSON.toJSONString(map));
         //
 
         return vo;
@@ -254,9 +254,19 @@ public class OrderImpl implements OrderService {
         //再来一单
     }
 
-    @Override
-    public void reminder(Integer id) {
 
+    //用户催单
+    @Override
+    public void reminder(Long id) {
+        Orders orders = orderMapper.getById(id);
+        // paySuccess 被跳过，不会生效
+        Map map = new HashMap();
+        map.put("type",2);//消息类型，1表示来单提醒
+        map.put("orderId",id);
+        map.put("content","订单号：" + orders.getNumber());
+//        log.info("websock 用户催单:{}",map);
+        webSocketServer.sendToAllClient(JSON.toJSONString(map));
+        //
     }
 
     @Override
@@ -333,6 +343,7 @@ public class OrderImpl implements OrderService {
         orderMapper.adminCancel(orders);
     }
 
+        //拒单
     @Override
     public void rejection(OrdersRejectionDTO dto){
         Orders orders = new Orders();
@@ -342,6 +353,10 @@ public class OrderImpl implements OrderService {
         orders.setCancelTime(LocalDateTime.now());
         orders.setPayStatus(Orders.REFUND);
         orderMapper.update(orders);
+
+
+
+
 
         //执行退款操作
         //xxxx
