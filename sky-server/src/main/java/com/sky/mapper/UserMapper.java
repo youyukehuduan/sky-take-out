@@ -5,6 +5,9 @@ import com.sky.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.time.LocalDateTime;
+import java.util.Map;
+
 @Mapper
 public interface UserMapper {
     /**
@@ -23,4 +26,9 @@ public interface UserMapper {
 
     @Select("select * from user where id=#{id}")
     User getById(Long userId);
+
+    Integer countByMap(Map map);
+
+    @Select("SELECT COALESCE(COUNT(*), 0) FROM user WHERE DATE(create_time) = DATE(#{time})")
+    Integer getNewUser(LocalDateTime time);
 }

@@ -1,23 +1,41 @@
 package com.sky.controller.admin;
 
 import com.sky.result.Result;
+import com.sky.service.WorkSpaceService;
+import com.sky.vo.BusinessDataVO;
+import com.sky.vo.OrderOverViewVO;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/admin/workspace")
+@Slf4j
+@Api(tags = "工作台")
 public class TempWorkspaceController {
 
-//    @GetMapping("/workspace/businessData")
-//    public Result<?> businessData() {
-//        return Result.success("此接口暂未实现");
-//    }
-//
-//    @GetMapping("/workspace/overviewOrders")
-//    public Result<?> overviewOrders() {
-//        return Result.success("此接口暂未实现");
-//    }
+    @Autowired
+    private WorkSpaceService workspaceService;
+
+    @GetMapping("businessData")
+    @ApiOperation("今日一览")
+    public Result businessData() {
+
+        BusinessDataVO vo = workspaceService.business();
+        return Result.success(vo);
+    }
+
+
+    @GetMapping("/overviewOrders")
+    @ApiOperation("订单管理")
+    public Result overviewOrders() {
+        OrderOverViewVO vo = workspaceService.overOrder();
+        return Result.success(vo);
+    }
 //
 //    @GetMapping("/workspace/overviewSetmeals")
 //    public Result<?> overviewSetmeals() {

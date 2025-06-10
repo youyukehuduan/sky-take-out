@@ -128,4 +128,61 @@
             orders
     </select>
 
+    <select id="sumByMap" resultType="java.lang.Double">
+        select sum(amount) from orders
+        <where>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="begin != null">
+                and order_time &gt;= #{begin}
+            </if>
+            <if test="end != null">
+                and order_time &lt;= #{end}
+            </if>
+        </where>
+    </select>
+
+    <select id="countByMap" resultType="java.lang.Integer">
+        select count(id) from orders
+        <where>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="begin != null">
+                and order_time &gt;= #{begin}
+            </if>
+            <if test="end != null">
+                and order_time &lt;= #{end}
+            </if>
+        </where>
+    </select>
+
+    <select id="getSalesTop10" resultType="com.sky.dto.GoodsSalesDTO">
+        select od.name name,sum(od.number) number from order_detail od ,orders o
+        where od.order_id = o.id
+        and o.status = 5
+        <if test="beginTime  != null">
+            and order_time &gt;= #{beginTime}
+        </if>
+        <if test="endTime  != null">
+            and order_time &lt;= #{endTime}
+        </if>
+        group by name
+        order by number desc
+        limit 0, 10
+    </select>
+
+    <select id="getTodayBusiness" resultType="com.sky.vo.OrderOverViewVO">
+        select
+            sum((case when status = 2 then 1 else 0 end)) waitingOrders,
+            sum((case when status = 3 then 1 else 0 end)) deliveredOrders,
+            sum((case when status = 5 then 1 else 0 end)) completedOrders,
+            sum((case when status = 6 then 1 else 0 end)) cancelledOrders,
+            count(1) allOrders
+        from
+            orders
+        where DATE(order_time) = DATE(now())
+    </select>
+
 </mapper>

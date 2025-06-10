@@ -1,11 +1,13 @@
 package com.sky.mapper;
 
 import com.github.pagehelper.Page;
+import com.sky.dto.GoodsSalesDTO;
 import com.sky.dto.OrdersCancelDTO;
 import com.sky.dto.OrdersConfirmDTO;
 import com.sky.dto.OrdersPageQueryDTO;
 import com.sky.entity.OrderDetail;
 import com.sky.entity.Orders;
+import com.sky.vo.OrderOverViewVO;
 import com.sky.vo.OrderStatisticsVO;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
@@ -14,6 +16,7 @@ import org.apache.ibatis.annotations.Update;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface OrderMapper {
@@ -65,4 +68,22 @@ public interface OrderMapper {
 
     @Select("select * from orders where status = #{status} and order_time < #{orderTime}")
     List<Orders> getByStatusAndOrderTime(Integer status, LocalDateTime orderTime);
+
+    Double sumByMap(Map map);
+
+    Integer countByMap(Map map);
+
+    List<GoodsSalesDTO> getSalesTop10(LocalDateTime beginTime, LocalDateTime endTime);
+
+    @Select("SELECT COALESCE(SUM(amount), 0.0) FROM orders WHERE DATE(order_time) = DATE(#{time}) AND status = 5")
+    Double getTodayMoney(LocalDateTime time);
+
+    @Select("SELECT COALESCE(Count(1), 0.0) FROM orders WHERE DATE(order_time) = DATE(#{time}) AND status = 5")
+    Integer getTodayOrder(LocalDateTime time);
+
+    @Select("SELECT COALESCE(COUNT(*), 0) FROM orders WHERE DATE(order_time) = DATE(#{time})")
+    Integer getTodayAllOrder(LocalDateTime time);
+
+
+    OrderOverViewVO getTodayBusiness();
 }
