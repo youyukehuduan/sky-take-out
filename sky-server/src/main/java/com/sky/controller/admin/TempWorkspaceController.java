@@ -3,7 +3,9 @@ package com.sky.controller.admin;
 import com.sky.result.Result;
 import com.sky.service.WorkSpaceService;
 import com.sky.vo.BusinessDataVO;
+import com.sky.vo.DishOverViewVO;
 import com.sky.vo.OrderOverViewVO;
+import com.sky.vo.SetmealOverViewVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -36,16 +38,21 @@ public class TempWorkspaceController {
         OrderOverViewVO vo = workspaceService.overOrder();
         return Result.success(vo);
     }
-//
-//    @GetMapping("/workspace/overviewSetmeals")
-//    public Result<?> overviewSetmeals() {
-//        return Result.success("此接口暂未实现");
-//    }
-//
-//    @GetMapping("/workspace/overviewDishes")
-//    public Result<?> overviewDishes() {
-//        return Result.success("此接口暂未实现");
-//    }
+
+
+    @GetMapping("/overviewSetmeals")
+    @ApiOperation("套餐总览")
+    public Result overviewSetmeals() {
+        SetmealOverViewVO vo = workspaceService.setmeal();
+        return Result.success(vo);
+    }
+
+    @GetMapping("/overviewDishes")
+    @ApiOperation("菜品总览")
+    public Result overviewDishes() {
+        DishOverViewVO vo = workspaceService.dishes();
+        return Result.success(vo);
+    }
 //
 //    @GetMapping("/order/conditionSearch")
 //    public Result<?> conditionSearch() {return Result.success("此接口暂未实现");}

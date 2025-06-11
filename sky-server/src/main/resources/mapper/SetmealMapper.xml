@@ -70,4 +70,12 @@
             category_id = #{categoryId}
     </select>
 
+    <select id="getTodaySetMeal" resultType="com.sky.vo.SetmealOverViewVO">
+        select
+            sum(case when status = 1 then 1 else 0 end) sold,
+            sum(case when status = 0 then 1 else 0 end) discontinued
+        from
+            Setmeal
+    </select>
+
 </mapper>
